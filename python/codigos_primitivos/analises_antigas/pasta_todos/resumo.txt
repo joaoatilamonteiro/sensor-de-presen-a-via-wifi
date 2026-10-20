@@ -1,0 +1,69 @@
+================================================================
+5 sessão(ões) | janela = 10 pacotes | "vazio" = ['sozinho', 'vazio']
+================================================================
+[andando] PESSOA | 1139 pacotes (0 outliers removidos) | 16.8 min | 1.13 pac/s | RSSI -51.1 ± 0.39 dBm | HT fraco 12%
+[sentado (1)] PESSOA | 1339 pacotes (0 outliers removidos) | 18.4 min | 1.22 pac/s | RSSI -51.8 ± 1.02 dBm | HT fraco 38%
+[sentado (2)] PESSOA | 1350 pacotes (5 outliers removidos) | 20.7 min | 1.09 pac/s | RSSI -53.7 ± 0.92 dBm | HT fraco 74%
+[sozinho] VAZIO | 998 pacotes (1 outliers removidos) | 15.3 min | 1.08 pac/s | RSSI -51.8 ± 0.44 dBm | HT fraco 28%
+[vazio] VAZIO | 1007 pacotes (2 outliers removidos) | 15.1 min | 1.11 pac/s | RSSI -49.3 ± 0.47 dBm | HT fraco 29%
+
+--- Eventos (janelas em que a oscilação do sinal fica muito acima do normal da própria sessão)
+[andando] 0.0–0.2 min (z=5); 11.7–11.9 min (z=5)
+[sentado (1)] 2.6–2.7 min (z=7); 8.6–8.7 min (z=4); 8.9–9.1 min (z=4); 11.0–11.1 min (z=5); 11.3–11.4 min (z=9); 11.8–11.9 min (z=7); 11.9–11.9 min (z=11); 12.8–12.9 min (z=8)
+[sentado (2)] 3.1–3.2 min (z=5); 3.4–3.5 min (z=5)
+[sozinho] 0.0–0.1 min (z=11)
+[vazio] nenhum evento
+
+--- Variabilidade por sessão (mediana das janelas)
+             L_std_raw  L_std_norm   dabs    rng  rssi_std  amp_cv
+sessao                                                            
+andando          1.512       0.055  0.068  0.179      0.30   0.050
+sentado (1)      2.035       0.077  0.085  0.252      0.49   0.062
+sentado (2)      2.116       0.090  0.093  0.296      0.49   0.044
+sozinho          1.535       0.049  0.060  0.164      0.40   0.056
+vazio            1.455       0.054  0.065  0.177      0.40   0.048
+
+================================================================
+TESTE "DEIXA UMA SESSÃO DE FORA" (treina nas outras, testa na sessão inteira nunca vista)
+================================================================
+% de janelas classificadas corretamente em cada sessão de fora:
+conjunto     Perfil estático (L)  RSSI médio  Variabilidade
+sessao                                                     
+andando                     22.0         3.0           16.0
+sentado (1)                 83.0        71.0           83.0
+sentado (2)                100.0       100.0           97.0
+sozinho                    100.0         0.0           88.0
+vazio                        1.0       100.0           63.0
+
+P(pessoa) média atribuída a cada sessão de fora (vazio deveria dar ~0, pessoa ~1):
+conjunto     Perfil estático (L)  RSSI médio  Variabilidade
+sessao                                                     
+andando                     0.35        0.35           0.26
+sentado (1)                 0.81        0.55           0.73
+sentado (2)                 1.00        0.86           0.85
+sozinho                     0.04        0.91           0.31
+vazio                       0.77        0.23           0.44
+
+Acerto balanceado (média entre vazio e pessoa): RSSI médio: 0.54 | Perfil estático (L): 0.59 | Variabilidade: 0.70
+AUC agregada [RSSI médio]: 0.535
+AUC agregada [Perfil estático (L)]: 0.801
+AUC agregada [Variabilidade]: 0.730
+
+================================================================
+TESTE DE SANIDADE (sessões da MESMA condição não deveriam se separar: AUC ~0.5)
+================================================================
+conjunto                   Perfil estático (L)  RSSI médio  Variabilidade
+par                                                                      
+andando × sentado (1)                    0.999       0.785          0.886
+andando × sentado (2)                    1.000       0.999          0.943
+sentado (1) × sentado (2)                0.975       0.939          0.622
+sozinho × vazio                          1.000       1.000          0.713
+
+================================================================
+LEITURA AUTOMÁTICA
+================================================================
+* Perfil estático em sessão nunca vista: acerto balanceado 0.59. NÃO generaliza bem (provável efeito de sessão).
+* Variabilidade em sessão nunca vista: acerto balanceado 0.70. Generalização parcial.
+* Sanidade (mesma condição): perfil estático separa sessões com AUC 0.99; variabilidade com AUC 0.79. Se estiver perto de 1, o atributo denuncia a sessão e não deve ser usado.
+* Taxa média < 10 pacotes/s: baixa para detectar movimento; busque 50-100 pacotes/s.
+* Com poucas sessões por condição, trate qualquer resultado como indício, não como prova.

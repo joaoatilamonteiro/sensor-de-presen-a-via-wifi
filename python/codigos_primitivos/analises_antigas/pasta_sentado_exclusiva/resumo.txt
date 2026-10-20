@@ -1,0 +1,34 @@
+================================================================
+2 sessão(ões) | janela = 10 pacotes | "vazio" = ['vazio']
+================================================================
+[sentado (1)] PESSOA | 1062 pacotes (0 outliers removidos) | 16.9 min | 1.05 pac/s | RSSI -51.8 ± 0.88 dBm | HT fraco 84%
+[sentado (2)] PESSOA | 1064 pacotes (3 outliers removidos) | 0.4 min | 50.03 pac/s | RSSI -51.6 ± 0.63 dBm | HT fraco 68%
+
+--- Eventos (janelas em que a oscilação do sinal fica muito acima do normal da própria sessão)
+[sentado (1)] 12.4–12.5 min (z=5)
+[sentado (2)] nenhum evento
+
+--- Variabilidade por sessão (mediana das janelas)
+             L_std_raw  L_std_norm   dabs    rng  rssi_std  amp_cv
+sessao                                                            
+sentado (1)      1.759       0.057  0.065  0.185       0.4   0.047
+sentado (2)      1.446       0.050  0.061  0.167       0.3   0.044
+
+================================================================
+TESTE "DEIXA UMA SESSÃO DE FORA" (treina nas outras, testa na sessão inteira nunca vista)
+================================================================
+Não foi possível: ao tirar qualquer sessão, as restantes não têm as duas condições (vazio e pessoa).
+Precisa de pelo menos 2 sessões de vazio e 2 com pessoa (ou 1+1 além da testada).
+
+================================================================
+TESTE DE SANIDADE (sessões da MESMA condição não deveriam se separar: AUC ~0.5)
+================================================================
+conjunto                   Perfil estático (L)  RSSI médio  Variabilidade
+par                                                                      
+sentado (1) × sentado (2)                  0.9        0.25          0.652
+
+================================================================
+LEITURA AUTOMÁTICA
+================================================================
+* Sanidade (mesma condição): perfil estático separa sessões com AUC 0.90; variabilidade com AUC 0.65. Se estiver perto de 1, o atributo denuncia a sessão e não deve ser usado.
+* Com poucas sessões por condição, trate qualquer resultado como indício, não como prova.

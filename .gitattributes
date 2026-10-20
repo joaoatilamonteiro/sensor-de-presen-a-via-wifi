@@ -1,0 +1,9 @@
+# Normaliza o final de linha (evita ruído entre Windows e Linux)
+* text=auto
+
+# Arquivos binários: o Git não deve tentar converter nem comparar como texto
+*.joblib binary
+*.png binary
+*.bin binary
+*.elf binary
+*.pdf binary

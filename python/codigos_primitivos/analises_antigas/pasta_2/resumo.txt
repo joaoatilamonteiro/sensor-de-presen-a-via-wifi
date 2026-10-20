@@ -1,0 +1,55 @@
+============================================================
+RESUMO
+============================================================
+[sentado (A)] 1355 pacotes | 20.7 min | 1.09 pacotes/s | RSSI -53.7 ± 0.92 dBm | dt mediano 0.940s
+[sentado (B)] 1339 pacotes | 18.4 min | 1.22 pacotes/s | RSSI -51.8 ± 1.02 dBm | dt mediano 0.913s
+Subportadoras úteis: L=53, H=56
+Pacotes com HT-LTF "fraco" (H/L<0.85): sentado (A) 73.9% | sentado (B) 38.2%
+
+--- Separabilidade univariada (AUC 0.5 = nada, 1.0 = perfeito)
+L-LTF raw : AUC mediana 0.660, máx 0.930 | |d| mediano 0.54
+L-LTF norm: AUC mediana 0.690, máx 0.965 | |d| mediano 0.71
+HT-LTF raw: AUC mediana 0.669, máx 0.719
+HT-LTF nor: AUC mediana 0.822, máx 0.900
+RSSI      : AUC 0.908
+
+--- Distância multivariada entre classes
+L raw     Mahalanobis²=  14.6  silhouette(5PC)=0.176
+L norm    Mahalanobis²=  15.9  silhouette(5PC)=0.195
+H raw     Mahalanobis²=   4.8  silhouette(5PC)=0.117
+H norm    Mahalanobis²=   4.9  silhouette(5PC)=0.237
+L+H raw   Mahalanobis²=  19.9  silhouette(5PC)=0.147
+L+H norm  Mahalanobis²=  21.0  silhouette(5PC)=0.238
+
+--- Classificação com CV em 5 blocos temporais contíguos por classe (AUC)
+modelo      LDA  LogReg  RandomForest  kNN(7)
+conjunto                                     
+RSSI      0.888   0.889         0.882   0.571
+L raw     0.985   0.980         0.971   0.967
+L norm    0.986   0.978         0.984   0.972
+H raw     0.917   0.920         0.940   0.924
+H norm    0.906   0.921         0.927   0.914
+L+H raw   0.992   0.991         0.980   0.958
+L+H norm  0.991   0.989         0.988   0.985
+--- Acurácia balanceada
+modelo      LDA  LogReg  RandomForest  kNN(7)
+conjunto                                     
+RSSI      0.862   0.862         0.861   0.572
+L raw     0.929   0.919         0.901   0.916
+L norm    0.939   0.919         0.930   0.920
+H raw     0.850   0.848         0.868   0.866
+H norm    0.840   0.853         0.845   0.849
+L+H raw   0.960   0.950         0.921   0.918
+L+H norm  0.961   0.950         0.942   0.950
+
+--- Atributos de MOVIMENTO (janelas de 10 pacotes, 268 janelas; 0.5 = nada)
+std_t=0.36  dabs=0.38  rssi_std=0.50  amp_std=0.60  rng=0.36
+Classificador só com movimento (LogReg, blocos): AUC=0.598
+
+============================================================
+LEITURA AUTOMÁTICA
+============================================================
+* Taxa de ~1.2 pacotes/s é baixa para detectar movimento; busque 50-100 pacotes/s.
+* As classes se separam por atributos ESTÁTICOS (força/perfil do sinal), mas os de MOVIMENTO separam pouco.
+  Se cada CSV é uma sessão diferente, o modelo pode estar aprendendo a sessão, não o movimento.
+  Colete as classes alternadas, na mesma sessão e posição, e teste treinando em umas sessões e validando em outras.

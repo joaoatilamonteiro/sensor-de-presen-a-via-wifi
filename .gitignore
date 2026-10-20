@@ -1,0 +1,60 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ---------- C++ / firmware (ESP32) ----------
+# PlatformIO
+.pio/
+# Configuração local do editor (VS Code)
+.vscode/
+# ESP-IDF
+build/
+sdkconfig
+sdkconfig.old
+managed_components/
+dependencies.lock
+# Arduino / compilados genéricos
+*.o
+*.obj
+*.elf
+*.bin
+*.map
+*.a
+*.so
+*.out
+
+# ---------- Dados e arquivos gerados pelo notebook ----------
+# Gravações de CSI (CSVs grandes)
+dados/**/*.csv
+python/dados/**/*.csv
+# Cache de leitura dos CSVs
+.cache_csi/
+# Logs das demos
+demo_log/
+# Modelos treinados: só o modelo final é versionado
+python/modelos/*.joblib
+!python/modelos/modelo_arvore.joblib
+modelo_sem_andando.joblib
+# Fotos das árvores: só a do modelo final é versionada
+python/foto_arvores_decisao/*
+!python/foto_arvores_decisao/modelo_arvore.png
+# Listagens de pastas geradas com "tree"
+arvore.txt
+
+# ---------- Credenciais (Wi-Fi, tokens) ----------
+# Obs.: src/csi_radar_secrets.h tem só valores de exemplo e É versionado.
+# Se colocar a senha real nele, rode: git update-index --skip-worktree src/csi_radar_secrets.h
+secrets.h
+credentials.h
+.env
+
+# ---------- Sistema operacional / editor ----------
+.DS_Store
+Thumbs.db
+.idea/
